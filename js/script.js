@@ -1,23 +1,45 @@
+const results = ["Rock", "Paper", "Scissors"]
 let computerScore = 0;
 let humanScore = 0;
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max)
+
+function getRandomInt() {
+    return Math.floor(Math.random() * results.length);
 }
 
 function getComputerChoice(){
-    const randomInt3 = getRandomInt(3);
-    switch(randomInt3){
-        case 0: return "Rock"
-        case 1: return "Paper"
-        case 2: return "Scissors"
-    }
+    const resultIndex = getRandomInt();
+    return results[resultIndex];
+    
 }
-let computerChoice = getComputerChoice();
-console.log(computerChoice);
 
 function getHumanChoice(){
-    const answer = prompt("Choose: Rock, Paper or Scissors");
+    const answer = prompt("Choose: Rock, paper or scissors");
     return answer;
 }
-console.log(getHumanChoice());
+
+function playRound() {
+    let computerChoice = getComputerChoice();
+    let humanChoice = getHumanChoice();
+    humanChoice = humanChoice[0].toUpperCase() + humanChoice.slice(1).toLowerCase();
+    if ( humanChoice === computerChoice ) {
+        console.log(`Tie!`);
+    }
+    switch (humanChoice + computerChoice) {
+        case "RockScissors":
+        case "PaperRock":
+        case "ScissorsPaper": {
+            humanScore++;
+            console.log(`You win! ${humanChoice} beats ${computerChoice}`);
+            break;
+        }
+        case "RockPaper":
+        case "PaperScissors":
+        case "ScissorsRock": {
+            computerScore++;
+            console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
+            break;
+        }
+    }
+}
+playRound();
