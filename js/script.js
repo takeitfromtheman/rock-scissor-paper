@@ -1,45 +1,55 @@
-const results = ["Rock", "Paper", "Scissors"]
-let computerScore = 0;
-let humanScore = 0;
+function playGame(rounds) {
+    const results = ["Rock", "Paper", "Scissors"]
+
+    let computerScore = 0;
+    let humanScore = 0;
 
 
-function getRandomInt() {
-    return Math.floor(Math.random() * results.length);
-}
-
-function getComputerChoice(){
-    const resultIndex = getRandomInt();
-    return results[resultIndex];
+    function getRandomResult() {
+        return Math.floor(Math.random() * results.length);
+    }
     
-}
-
-function getHumanChoice(){
-    const answer = prompt("Choose: Rock, paper or scissors");
-    return answer;
-}
-
-function playRound() {
-    let computerChoice = getComputerChoice();
-    let humanChoice = getHumanChoice();
-    humanChoice = humanChoice[0].toUpperCase() + humanChoice.slice(1).toLowerCase();
-    if ( humanChoice === computerChoice ) {
-        console.log(`Tie!`);
+    function getComputerChoice() {
+        const resultIndex = getRandomResult();
+        return results[resultIndex];
     }
-    switch (humanChoice + computerChoice) {
-        case "RockScissors":
-        case "PaperRock":
-        case "ScissorsPaper": {
-            humanScore++;
-            console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-            break;
+
+    function getHumanChoice() {
+        return prompt("Choose: Rock, paper or scissors");
+    }
+
+    function playRound() {
+        let computerChoice = getComputerChoice();
+        let humanChoice = getHumanChoice();
+        humanChoice = humanChoice[0].toUpperCase() + humanChoice.slice(1).toLowerCase();
+        if (humanChoice === computerChoice) {
+            console.log(`Tie!`);
         }
-        case "RockPaper":
-        case "PaperScissors":
-        case "ScissorsRock": {
-            computerScore++;
-            console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
-            break;
+        switch (humanChoice + computerChoice) {
+            case "RockScissors":
+            case "PaperRock":
+            case "ScissorsPaper": {
+                humanScore++;
+                console.log(`You win! ${humanChoice} beats ${computerChoice}`);
+                break;
+            }
+            case "RockPaper":
+            case "PaperScissors":
+            case "ScissorsRock": {
+                computerScore++;
+                console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
+                break;
+            }
         }
     }
+    for (let i = 0; i < rounds; i++) {
+        playRound();
+    }
+    console.log(`Your score: ${humanScore}, \nComputer Score: ${computerScore}`);
+    console.log(`${
+        (humanScore > computerScore) ? `You win the game!` :
+            (humanScore < computerScore) ? `You lose the game!` :
+                `Nobody won the game!`
+    }`)
 }
-playRound();
+playGame(5)
